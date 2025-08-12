@@ -1,0 +1,10 @@
+# Build Node.js Backend
+FROM node:18-alpine
+WORKDIR /app
+COPY backend/package*.json ./
+RUN npm install
+COPY backend ./backend
+WORKDIR /app/backend
+EXPOSE 5000
+CMD ["node", "index.js"]
+

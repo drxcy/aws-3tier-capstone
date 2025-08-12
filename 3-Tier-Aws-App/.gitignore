@@ -1,0 +1,7 @@
+*.terraform
+*.env
+*.terraform.tfstate
+*.terraform.tfstate.backup
+*my-vpc-server-key.pem
+*my-vpc-server-key.pub
+*.terraform.lock.hcl
