@@ -7,6 +7,10 @@ services:
     ports:
       - "5000:5000"
     restart: always
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/appdb
+    depends_on:
+      - db
 
   frontend:
     build:
@@ -17,3 +21,21 @@ services:
     depends_on:
       - backend
     restart: always
+
+  db:
+    image: postgres:17
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: appdb
+    volumes:
+      # Init scripts (only run on first startup)
+      - ../db/init:/docker-entrypoint-initdb.d
+      # Persistent database storage
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+volumes:
+  postgres_data:
