@@ -44,6 +44,14 @@ resource "aws_instance" "web" {
   vpc_security_group_ids      = [aws_security_group.web_sg.id]
   key_name      = "my-vpc-server-key"
   associate_public_ip_address = true
+   user_data = <<-EOF
+    #!/bin/bash
+    yum update -y
+    yum install -y httpd
+    systemctl enable httpd
+    systemctl start httpd
+    echo "Hello from EC2 $(hostname)" > /var/www/html/index.html
+  EOF
 
   tags = {
     Name = "aws-backend-ec2"
