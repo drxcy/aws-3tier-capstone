@@ -9,6 +9,7 @@
     "db:init": "psql -h localhost -U postgres -d appdb -f ./init/01-init.sql",
     "db:seed": "psql -h localhost -U postgres -d appdb -f ./init/02-seed.sql",
     "db:setup": "npm run db:init && npm run db:seed",
-    "db:setup-node": "node config.js"
+    "db:setup-node": "node config.js",
+    "start": "node config.js"
   }
 }

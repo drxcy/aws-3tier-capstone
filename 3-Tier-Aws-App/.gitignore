@@ -5,3 +5,5 @@
 *my-vpc-server-key.pem
 *my-vpc-server-key.pub
 *.terraform.lock.hcl
+*.env
+*node_modules
