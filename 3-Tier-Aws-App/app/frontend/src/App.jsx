@@ -7,7 +7,8 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/message`)
+    // fetch(`${API_BASE_URL}/message`)
+      fetch("http://3.109.4.46//api/message")
       .then((res) => res.json())
       .then((data) => {
         setMsg(data.message);

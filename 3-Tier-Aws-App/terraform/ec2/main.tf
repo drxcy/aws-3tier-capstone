@@ -4,7 +4,7 @@ data "aws_ami" "amazon_linux" {
 
   filter {
     name   = "name"
-    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+    values = ["al2023-ami-*-x86_64"]
   }
 }
 
@@ -45,13 +45,13 @@ resource "aws_instance" "web" {
   key_name      = "my-vpc-server-key"
   associate_public_ip_address = true
    user_data = <<-EOF
-    #!/bin/bash
-    yum update -y
-    yum install -y httpd
-    systemctl enable httpd
-    systemctl start httpd
-    echo "Hello from EC2 $(hostname)" > /var/www/html/index.html
-  EOF
+  #!/bin/bash
+  dnf update -y
+  dnf install -y httpd
+  systemctl enable httpd
+  systemctl start httpd
+  echo "Hello from EC2 $(hostname)" > /var/www/html/index.html
+EOF
 
   tags = {
     Name = "aws-backend-ec2"

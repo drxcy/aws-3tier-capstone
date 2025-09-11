@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+
+    environment {
+        EC2_USER = "ec2-User"
+        EC2_HOST = "http://3.109.4.46/"
+        GIT_REPO = "https://github.com/drxcy/aws-3tier-capstone.git"
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: "${GIT_REPO}"
+            }
+        }
+
+        stage('Build Backend') {
+            steps {
+                script {
+                    if (fileExists('package.json')) {
+                        sh 'npm install'
+                    } 
+                     else {
+                        echo "No build dependencies found"
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to EC2') {
+            steps {
+                sshagent (credentials: ['my-vpc-server-key.pem']) {
+                    sh """
+                        chmod +x cicd/jenkins/deploy.sh
+                        cicd/jenkins/deploy.sh
+                    """
+                }
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                sh """
+                    chmod +x cicd/jenkins/terraform.sh
+                    cicd/jenkins/terraform.sh
+                """
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Pipeline completed successfully!"
+        }
+        failure {
+            echo "❌ Pipeline failed. Check logs."
+        }
+    }
+}

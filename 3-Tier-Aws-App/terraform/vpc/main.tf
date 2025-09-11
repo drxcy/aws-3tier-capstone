@@ -14,13 +14,24 @@
             Name = "Public_subnet"
         }
     }
-    resource "aws_subnet" "private" {
+    
+    resource "aws_subnet" "private_a" {
         vpc_id = aws_vpc.main.id
-        cidr_block = var.private_subnet_cidr
+        cidr_block = var.private_subnet_cidr_a
         availability_zone = "ap-south-1b"
         tags = {
-            Name = "Private_subnet"
+            Name = "Private_subnet_a"
         }
+    }
+
+    resource "aws_subnet" "private_b" {
+        vpc_id = aws_vpc.main.id
+        cidr_block = var.private_subnet_cidr_b
+        availability_zone = "ap-south-1c"
+        tags = {
+            Name = "Private_subnet_b"
+        }
+
     }
 
     resource "aws_internet_gateway" "igw" {
@@ -39,7 +50,7 @@
             Name = "Public_route_table"
         }
     }
-    resource "aws_route_table_association" "public"{
+    resource "aws_route_table_association" "public" {
         subnet_id = aws_subnet.public.id
         route_table_id = aws_route_table.public.id
     }
