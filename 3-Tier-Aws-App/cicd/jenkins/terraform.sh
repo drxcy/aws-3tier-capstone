@@ -2,7 +2,7 @@
 set -e  # exit immediately if a command fails
 
 # Path to Terraform project (adjust if different)
-TERRAFORM_DIR="3-Tier-Aws-App/terraform"
+TERRAFORM_DIR="terraform"
 
 echo "[INFO] Starting Terraform pipeline..."
 
