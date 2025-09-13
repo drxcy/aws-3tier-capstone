@@ -1,5 +1,7 @@
 #!/bin/bash
 set -e  # exit immediately if a command fails
+# Ensure terraform is in PATH for Jenkins
+export PATH=$PATH:/usr/local/bin
 
 # Path to Terraform project (adjust if different)
 TERRAFORM_DIR="terraform"
